@@ -6,8 +6,6 @@ import HandTrackingMod
 import PoseTrackingMod
 import os
 
-path = os.path.dirname(__file__)
-
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
 st.title("💻 Visão Computacional")
