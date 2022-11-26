@@ -67,22 +67,20 @@ if funcionalidaEscolhida == "Aplicações":
     subFuncionalidaEscolhida = st.radio(
         "Selecione uma opção:", ("Sistema para tirar fotos (Via câmera)", "Sistema de contagem (Via câmera)"), horizontal=True)
     if subFuncionalidaEscolhida == "Sistema para tirar fotos (Via câmera)":
-        imagePath = path+'/media/fingers/2.jpg'
-        imageCap = Image.open(imagePath)
+        imageCap = Image.open(r".\media\fingers\2.jpg")
         st.info("Realizar o gesto abaixo para capturar a foto")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
                 os.system("TakePictureController.py")
-                with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
+                with open(r".\media\pictures\imagem.png", "rb") as arquivoFinal:
                     st.download_button(
                         label="📥 Baixar imagem", data=arquivoFinal, file_name="imagem.png")
                 os.remove(
-                    "./media/pictures/imagem.png")
+                    r".\media\pictures\imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem (Via câmera)":
-        imagePath = path+'/media/fingers.jpg'
-        imageCap = Image.open(imagePath)
+        imageCap = Image.open(r".\media\fingers.jpg")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
