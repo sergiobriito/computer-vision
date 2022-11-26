@@ -11,7 +11,7 @@ cap.set(4, hCam)
 cTime = 0
 pTime = 0
 
-folderPath = r"media\fingers"
+folderPath = r".\media\fingers"
 myList = os.listdir(folderPath)
 overLayList = []
 
