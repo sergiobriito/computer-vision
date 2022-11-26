@@ -67,7 +67,7 @@ if funcionalidaEscolhida == "Aplicações":
     subFuncionalidaEscolhida = st.radio(
         "Selecione uma opção:", ("Sistema para tirar fotos (Via câmera)", "Sistema de contagem (Via câmera)"), horizontal=True)
     if subFuncionalidaEscolhida == "Sistema para tirar fotos (Via câmera)":
-        imageCap = Image.open(r".\media\fingers\2.jpg")
+        imageCap = Image.open("./media/fingers/2.jpg")
         st.info("Realizar o gesto abaixo para capturar a foto")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
