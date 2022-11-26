@@ -6,6 +6,8 @@ import HandTrackingMod
 import PoseTrackingMod
 import os
 
+os.system("export DISPLAY=:0.0")
+
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
 st.title("💻 Visão Computacional")
