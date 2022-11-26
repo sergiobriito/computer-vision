@@ -6,6 +6,7 @@ import HandTrackingMod
 import PoseTrackingMod
 import os
 
+path = os.path.dirname(__file__)
 
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
@@ -66,8 +67,8 @@ if funcionalidaEscolhida == "Aplicações":
     subFuncionalidaEscolhida = st.radio(
         "Selecione uma opção:", ("Sistema para tirar fotos (Via câmera)", "Sistema de contagem (Via câmera)"), horizontal=True)
     if subFuncionalidaEscolhida == "Sistema para tirar fotos (Via câmera)":
-        imageCap = Image.open(
-            "./media/fingers/2.jpg")
+        imagePath = path+'/media/fingers/2.jpg'
+        imageCap = Image.open(imagePath)
         st.info("Realizar o gesto abaixo para capturar a foto")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
@@ -80,8 +81,8 @@ if funcionalidaEscolhida == "Aplicações":
                 os.remove(
                     "./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem (Via câmera)":
-        imageCap = Image.open(
-            "./media/fingers.jpg")
+        imagePath = path+'/media/fingers.jpg'
+        imageCap = Image.open(imagePath)
         st.info("Realizar os gestos abaixo para visualizar a contagem")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
