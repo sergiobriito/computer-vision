@@ -80,7 +80,7 @@ if funcionalidaEscolhida == "Aplicações":
                 os.remove(
                     "./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem (Via câmera)":
-        imageCap = Image.open("./media/fingers.JGP")
+        imageCap = Image.open("./media/fingers.jgp")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
