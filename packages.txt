@@ -1,3 +1,4 @@
 libgl1
 xcb
 libxcb-xinerama0
+xterm    
