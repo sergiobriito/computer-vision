@@ -24,12 +24,12 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("FaceMeshTrackingMod.py")
+                os.system("./FaceMeshTrackingMod.py")
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("FaceMeshTrackingMod.py")
+                os.system("./FaceMeshTrackingMod.py")
 
 
 if funcionalidaEscolhida == "Reconhecimento corporal":
