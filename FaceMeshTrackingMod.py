@@ -4,13 +4,15 @@ import time
 import av
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-def findFaceMesh(img, draw=True):
-    mpFaceMesh = mp.solutions.face_mesh
-    faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-    mpDraw = mp.solutions.drawing_utils
-    drawSpec = mpDraw.DrawingSpec(
-        thickness=1, circle_radius=1, color=(0, 255, 0))
+mpFaceMesh = mp.solutions.face_mesh
+faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+mpDraw = mp.solutions.drawing_utils
+drawSpec = mpDraw.DrawingSpec(
+    thickness=1, circle_radius=1, color=(0, 255, 0))
 
+
+def findFaceMesh(img, draw=True):
+    img.flags.writeable = False
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceMesh.process(imgRGB)
 
