@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import streamlit.components.v1 as components
+import subprocess
 import os
 
 os.system("chmod +x ./FaceMeshTrackingMod.py")
@@ -22,12 +23,12 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("./FaceMeshTrackingMod.py")
+                subprocess.run(["python", "./FaceMeshTrackingMod.py"])
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("./FaceMeshTrackingMod.py")
+                subprocess.run(["python", "./FaceMeshTrackingMod.py"])
 
 
 if funcionalidaEscolhida == "Reconhecimento corporal":
