@@ -3,6 +3,7 @@ from PIL import Image
 import streamlit.components.v1 as components
 import os
 
+os.system("chmod +x ./FaceMeshTrackingMod.py")
 
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
