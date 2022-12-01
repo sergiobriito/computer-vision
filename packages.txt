@@ -2,3 +2,4 @@ libgl1
 xcb
 libxcb-xinerama0
 xterm    
+aiortc==1.0.0
