@@ -55,20 +55,18 @@ if funcionalidaEscolhida == "Reconhecimento facial":
     subFuncionalidaEscolhida = st.radio(
         "Selecione uma opção:", ("Exemplo", "Ativar câmera (Autorizar)"), horizontal=True)
     if subFuncionalidaEscolhida == "Exemplo":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            RTC_CONFIGURATION = RTCConfiguration(
-                {"iceServers": [
-                    {"urls": ["stun:stun.l.google.com:19302"]}]}
-            )
-            webrtc_ctx = webrtc_streamer(
-                key="WYH",
-                mode=WebRtcMode.SENDRECV,
-                rtc_configuration=RTC_CONFIGURATION,
-                media_stream_constraints={"video": True, "audio": False},
-                video_processor_factory=VideoProcessorFaceMesh,
-                async_processing=True,
-            )
+        RTC_CONFIGURATION = RTCConfiguration(
+            {"iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]}]}
+        )
+        webrtc_ctx = webrtc_streamer(
+            key="WYH",
+            mode=WebRtcMode.SENDRECV,
+            rtc_configuration=RTC_CONFIGURATION,
+            media_stream_constraints={"video": True, "audio": False},
+            video_processor_factory=VideoProcessorFaceMesh,
+            async_processing=True,
+        )
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
