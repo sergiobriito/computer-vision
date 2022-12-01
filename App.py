@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
 import streamlit.components.v1 as components
-import FaceMeshTrackingMod
 import HandTrackingMod
 import PoseTrackingMod
 import av
