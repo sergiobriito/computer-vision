@@ -75,10 +75,10 @@ if funcionalidaEscolhida == "Reconhecimento facial":
             {"urls": ["stun:stun.l.google.com:19302"]}]}
     )
     webrtc_ctx = webrtc_streamer(
-        key="WYH",
+        key="Video",
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
-        video_processor_factory=FaceMeshDetector,
+        video_frame_callback=FaceMeshDetector,
     )
 
 
@@ -88,11 +88,10 @@ if funcionalidaEscolhida == "Reconhecimento das mãos":
             {"urls": ["stun:stun.l.google.com:19302"]}]}
     )
     webrtc_ctx = webrtc_streamer(
-        key="WYH",
-        mode=WebRtcMode.SENDRECV,
+        key="Video",
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
-        video_processor_factory=HandDetector,
+        video_frame_callback=HandDetector,
     )
 
 
