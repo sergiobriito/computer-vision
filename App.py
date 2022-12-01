@@ -1,11 +1,44 @@
 import streamlit as st
 from PIL import Image
+import mediapipe as mp
+import cv2
 import streamlit.components.v1 as components
+from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
+import av
 import subprocess
 import os
 import sys
 
-os.system("chmod +x ./FaceMeshTrackingMod.py")
+# --Funcionalidades--
+
+
+def findFaceMesh(img, draw=True):
+    mpFaceMesh = mp.solutions.face_mesh
+    faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+    mpDraw = mp.solutions.drawing_utils
+    drawSpec = mpDraw.DrawingSpec(
+        thickness=1, circle_radius=1, color=(0, 255, 0))
+
+    img.flags.writeable = False
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    results = faceMesh.process(img)
+
+    img.flags.writeable = True
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+    if results.multi_face_landmarks:
+        for faceLms in results.multi_face_landmarks:
+            if draw:
+                mpDraw.draw_landmarks(
+                    img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
+    return img
+
+class VideoProcessorFaceMesh:
+    def recv(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        img = findFaceMesh(img)
+        return av.VideoFrame.from_ndarray(img, format="bgr24")
+
 
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
@@ -24,12 +57,24 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                subprocess.run([f"{sys.executable}", "./FaceMeshTrackingMod.py"])
+                RTC_CONFIGURATION = RTCConfiguration(
+                    {"iceServers": [
+                        {"urls": ["stun:stun.l.google.com:19302"]}]}
+                )
+                webrtc_ctx = webrtc_streamer(
+                    key="WYH",
+                    mode=WebRtcMode.SENDRECV,
+                    rtc_configuration=RTC_CONFIGURATION,
+                    media_stream_constraints={"video": True, "audio": False},
+                    video_processor_factory=VideoProcessorFaceMesh,
+                    async_processing=True,
+                )
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                subprocess.run([f"{sys.executable}", "./FaceMeshTrackingMod.py"])
+                subprocess.run(
+                    [f"{sys.executable}", "./FaceMeshTrackingMod.py"])
 
 
 if funcionalidaEscolhida == "Reconhecimento corporal":
