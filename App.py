@@ -79,7 +79,6 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
         video_processor_factory=FaceMeshDetector,
-        async_processing=True,
     )
 
 
@@ -94,7 +93,6 @@ if funcionalidaEscolhida == "Reconhecimento das mãos":
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
         video_processor_factory=HandDetector,
-        async_processing=True,
     )
 
 
