@@ -12,7 +12,7 @@ import sys
 # --Funcionalidades--
 
 
-class FaceMesh:
+class FaceMeshDetector:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
         mpFaceMesh = mp.solutions.face_mesh
@@ -36,11 +36,34 @@ class FaceMesh:
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
+class HandDetector:
+
+    def recv(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        mpHands = mp.solutions.hands
+        hands = mpHands.Hands()
+        mpDraw = mp.solutions.drawing_utils
+
+        img.flags.writeable = False
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        results = hands.process(img)
+
+        img.flags.writeable = True
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+        if results.multi_hand_landmarks:
+            for handLms in results.multi_hand_landmarks:
+                mpDraw.draw_landmarks(
+                    img, handLms, mpHands.HAND_CONNECTIONS)
+
+        return av.VideoFrame.from_ndarray(img, format="bgr24")
+
+
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
 st.title("💻 Visão Computacional")
 
-funcionalidaEscolhida = st.radio("Selecione uma opção:", ("Sobre", "Reconhecimento facial", "Reconhecimento corporal",
+funcionalidaEscolhida = st.radio("Selecione uma opção:", ("Sobre", "Reconhecimento facial",
                                  "Reconhecimento das mãos", "Aplicações"))
 
 if funcionalidaEscolhida == "Sobre":
@@ -56,39 +79,24 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         mode=WebRtcMode.SENDRECV,
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
-        video_processor_factory=FaceMesh,
+        video_processor_factory=FaceMeshDetector,
         async_processing=True,
     )
 
 
-if funcionalidaEscolhida == "Reconhecimento corporal":
-    subFuncionalidaEscolhida = st.radio(
-        "Selecione uma opção:", ("Exemplo", "Ativar câmera (Autorizar)"), horizontal=True)
-    if subFuncionalidaEscolhida == "Exemplo":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                PoseTrackingMod.main(1)
-    if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                PoseTrackingMod.main(2)
-
-
 if funcionalidaEscolhida == "Reconhecimento das mãos":
-    subFuncionalidaEscolhida = st.radio(
-        "Selecione uma opção:", ("Exemplo", "Ativar câmera (Autorizar)"), horizontal=True)
-    if subFuncionalidaEscolhida == "Exemplo":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                HandTrackingMod.main(1)
-    if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                HandTrackingMod.main(2)
+    RTC_CONFIGURATION = RTCConfiguration(
+        {"iceServers": [
+            {"urls": ["stun:stun.l.google.com:19302"]}]}
+    )
+    webrtc_ctx = webrtc_streamer(
+        key="WYH",
+        mode=WebRtcMode.SENDRECV,
+        rtc_configuration=RTC_CONFIGURATION,
+        media_stream_constraints={"video": True, "audio": False},
+        video_processor_factory=HandDetector,
+        async_processing=True,
+    )
 
 
 if funcionalidaEscolhida == "Aplicações":
