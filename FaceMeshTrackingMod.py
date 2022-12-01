@@ -7,8 +7,7 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 mpDraw = mp.solutions.drawing_utils
-drawSpec = mpDraw.DrawingSpec(
-    thickness=1, circle_radius=1, color=(0, 255, 0))
+drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=(0, 255, 0))
 
 
 def findFaceMesh(img, draw=True):
