@@ -33,6 +33,7 @@ def findFaceMesh(img, draw=True):
                     img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
     return img
 
+
 class VideoProcessorFaceMesh:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -56,19 +57,18 @@ if funcionalidaEscolhida == "Reconhecimento facial":
     if subFuncionalidaEscolhida == "Exemplo":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
-            with st.spinner('Processando...'):
-                RTC_CONFIGURATION = RTCConfiguration(
-                    {"iceServers": [
-                        {"urls": ["stun:stun.l.google.com:19302"]}]}
-                )
-                webrtc_ctx = webrtc_streamer(
-                    key="WYH",
-                    mode=WebRtcMode.SENDRECV,
-                    rtc_configuration=RTC_CONFIGURATION,
-                    media_stream_constraints={"video": True, "audio": False},
-                    video_processor_factory=VideoProcessorFaceMesh,
-                    async_processing=True,
-                )
+            RTC_CONFIGURATION = RTCConfiguration(
+                {"iceServers": [
+                    {"urls": ["stun:stun.l.google.com:19302"]}]}
+            )
+            webrtc_ctx = webrtc_streamer(
+                key="WYH",
+                mode=WebRtcMode.SENDRECV,
+                rtc_configuration=RTC_CONFIGURATION,
+                media_stream_constraints={"video": True, "audio": False},
+                video_processor_factory=VideoProcessorFaceMesh,
+                async_processing=True,
+            )
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
