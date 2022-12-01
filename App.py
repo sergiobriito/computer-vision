@@ -7,6 +7,8 @@ import PoseTrackingMod
 import av
 import os
 
+os.system("chmod +x ./FaceMeshTrackingMod.py")
+
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
 st.title("💻 Visão Computacional")
