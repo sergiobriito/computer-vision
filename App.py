@@ -12,32 +12,27 @@ import sys
 # --Funcionalidades--
 
 
-def findFaceMesh(img, draw=True):
-    mpFaceMesh = mp.solutions.face_mesh
-    faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-    mpDraw = mp.solutions.drawing_utils
-    drawSpec = mpDraw.DrawingSpec(
-        thickness=1, circle_radius=1, color=(0, 255, 0))
-
-    img.flags.writeable = False
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = faceMesh.process(img)
-
-    img.flags.writeable = True
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-
-    if results.multi_face_landmarks:
-        for faceLms in results.multi_face_landmarks:
-            if draw:
-                mpDraw.draw_landmarks(
-                    img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
-    return img
-
-
-class VideoProcessorFaceMesh:
+class FaceMesh:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        img = findFaceMesh(img)
+        mpFaceMesh = mp.solutions.face_mesh
+        faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+        mpDraw = mp.solutions.drawing_utils
+        drawSpec = mpDraw.DrawingSpec(
+            thickness=1, circle_radius=1, color=(0, 255, 0))
+
+        img.flags.writeable = False
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        results = faceMesh.process(img)
+
+        img.flags.writeable = True
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+        if results.multi_face_landmarks:
+            for faceLms in results.multi_face_landmarks:
+                mpDraw.draw_landmarks(
+                    img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
+
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
@@ -52,27 +47,18 @@ if funcionalidaEscolhida == "Sobre":
     st.info("Projeto de soluções de visão computacional em Python, utilizando OpenCV e MediaPipe")
 
 if funcionalidaEscolhida == "Reconhecimento facial":
-    subFuncionalidaEscolhida = st.radio(
-        "Selecione uma opção:", ("Exemplo", "Ativar câmera (Autorizar)"), horizontal=True)
-    if subFuncionalidaEscolhida == "Exemplo":
-        RTC_CONFIGURATION = RTCConfiguration(
-            {"iceServers": [
-                {"urls": ["stun:stun.l.google.com:19302"]}]}
-        )
-        webrtc_ctx = webrtc_streamer(
-            key="WYH",
-            mode=WebRtcMode.SENDRECV,
-            rtc_configuration=RTC_CONFIGURATION,
-            media_stream_constraints={"video": True, "audio": False},
-            video_processor_factory=VideoProcessorFaceMesh,
-            async_processing=True,
-        )
-    if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                subprocess.run(
-                    [f"{sys.executable}", "./FaceMeshTrackingMod.py"])
+    RTC_CONFIGURATION = RTCConfiguration(
+        {"iceServers": [
+            {"urls": ["stun:stun.l.google.com:19302"]}]}
+    )
+    webrtc_ctx = webrtc_streamer(
+        key="WYH",
+        mode=WebRtcMode.SENDRECV,
+        rtc_configuration=RTC_CONFIGURATION,
+        media_stream_constraints={"video": True, "audio": False},
+        video_processor_factory=FaceMesh,
+        async_processing=True,
+    )
 
 
 if funcionalidaEscolhida == "Reconhecimento corporal":
