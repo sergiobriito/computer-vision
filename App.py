@@ -42,9 +42,6 @@ class VideoProcessor:
     
 webrtc_ctx = webrtc_streamer(
     key="WYH",
-    mode=WebRtcMode.SENDRECV,
-    rtc_configuration=RTC_CONFIGURATION,
     media_stream_constraints={"video": True, "audio": False},
     video_frame_callback=VideoProcessor,
-    async_processing=True,
 )
