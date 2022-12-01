@@ -1,12 +1,8 @@
 import streamlit as st
 from PIL import Image
 import streamlit.components.v1 as components
-import HandTrackingMod
-import PoseTrackingMod
-import av
 import os
 
-os.system("chmod +x ./FaceMeshTrackingMod.py")
 
 # ---Navegador---
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
@@ -25,12 +21,12 @@ if funcionalidaEscolhida == "Reconhecimento facial":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("./FaceMeshTrackingMod.py")
+                os.system("FaceMeshTrackingMod.py")
     if subFuncionalidaEscolhida == "Ativar câmera (Autorizar)":
         botaoExecutar = st.button("Executar")
         if botaoExecutar:
             with st.spinner('Processando...'):
-                os.system("./FaceMeshTrackingMod.py")
+                os.system("FaceMeshTrackingMod.py")
 
 
 if funcionalidaEscolhida == "Reconhecimento corporal":
