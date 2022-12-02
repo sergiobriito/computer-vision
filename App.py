@@ -69,7 +69,9 @@ funcionalidaEscolhida = st.radio("Selecione uma opção:", ("Sobre", "Reconhecim
                                  "Reconhecimento das mãos", "Aplicações"))
 
 if funcionalidaEscolhida == "Sobre":
-    st.info("Projeto de soluções de visão computacional em Python, utilizando OpenCV e MediaPipe")
+    st.info("Projeto de visão computacional em Python, utilizando OpenCV e MediaPipe")
+    imageCap = Image.open("./media/intro.jpg")
+    st.image(imageCap)
 
 if funcionalidaEscolhida == "Reconhecimento facial":
     st.info("Autorizar o uso da câmera")
