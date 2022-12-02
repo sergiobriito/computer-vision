@@ -4,6 +4,7 @@ import mediapipe as mp
 import cv2
 import streamlit.components.v1 as components
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
+import time
 import av
 import subprocess
 import os
@@ -217,6 +218,7 @@ if funcionalidaEscolhida == "Aplicações":
             with open("./media/imagem.png", "rb") as arquivoFinal:
                 st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
+            st.write(f'Imagem salva (${time()})')
         if os.path.exists("./media/imagem.png"):
             os.remove("./media/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
