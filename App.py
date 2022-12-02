@@ -10,51 +10,48 @@ import os
 import sys
 
 # --Funcionalidades--
-
-
 class FaceMeshDetector:
-    def recv(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-        mpFaceMesh = mp.solutions.face_mesh
-        faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-        mpDraw = mp.solutions.drawing_utils
-        drawSpec = mpDraw.DrawingSpec(
+    def __init__(self):
+        self.mpFaceMesh = mp.solutions.face_mesh
+        self.faceMesh = self.mpFaceMesh.FaceMesh(max_num_faces=2)
+        self.mpDraw = mp.solutions.drawing_utils
+        self.drawSpec = self.mpDraw.DrawingSpec(
             thickness=1, circle_radius=1, color=(0, 255, 0))
 
+    def recv(self, frame):
+        img = frame.to_ndarray(format="bgr24")
         img.flags.writeable = False
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = faceMesh.process(img)
-
+        results = self.faceMesh.process(img)
         img.flags.writeable = True
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
         if results.multi_face_landmarks:
             for faceLms in results.multi_face_landmarks:
-                mpDraw.draw_landmarks(
-                    img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
+                self.mpDraw.draw_landmarks(
+                    img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec, self.drawSpec)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
 class HandDetector:
+    def __init__(self):
+        self.mpHands = mp.solutions.hands
+        self.hands = self.mpHands.Hands()
+        self.mpDraw = mp.solutions.drawing_utils
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        mpHands = mp.solutions.hands
-        hands = mpHands.Hands()
-        mpDraw = mp.solutions.drawing_utils
-
         img.flags.writeable = False
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = hands.process(img)
-
+        results = self.hands.process(img)
         img.flags.writeable = True
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
         if results.multi_hand_landmarks:
             for handLms in results.multi_hand_landmarks:
-                mpDraw.draw_landmarks(
-                    img, handLms, mpHands.HAND_CONNECTIONS)
+                self.mpDraw.draw_landmarks(
+                    img, handLms, self.mpHands.HAND_CONNECTIONS)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
@@ -63,6 +60,11 @@ class HandDetector:
 st.set_page_config(page_icon="💻", page_title="Visão Computacional")
 st.title("💻 Visão Computacional")
 
+RTC_CONFIGURATION = RTCConfiguration(
+    {"iceServers": [
+        {"urls": ["stun:stun.l.google.com:19302"]}]}
+)
+
 funcionalidaEscolhida = st.radio("Selecione uma opção:", ("Sobre", "Reconhecimento facial",
                                  "Reconhecimento das mãos", "Aplicações"))
 
@@ -70,47 +72,39 @@ if funcionalidaEscolhida == "Sobre":
     st.info("Projeto de soluções de visão computacional em Python, utilizando OpenCV e MediaPipe")
 
 if funcionalidaEscolhida == "Reconhecimento facial":
-    RTC_CONFIGURATION = RTCConfiguration(
-        {"iceServers": [
-            {"urls": ["stun:stun.l.google.com:19302"]}]}
-    )
+    st.info("Autorizar o uso da câmera")
     webrtc_ctx = webrtc_streamer(
         key="Video",
+        mode=WebRtcMode.SENDRECV,
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
         video_processor_factory=FaceMeshDetector,
+        async_processing=True,
     )
-
 
 if funcionalidaEscolhida == "Reconhecimento das mãos":
-    RTC_CONFIGURATION = RTCConfiguration(
-        {"iceServers": [
-            {"urls": ["stun:stun.l.google.com:19302"]}]}
-    )
+    st.info("Autorizar o uso da câmera")
     webrtc_ctx = webrtc_streamer(
         key="Video",
+        mode=WebRtcMode.SENDRECV,
         rtc_configuration=RTC_CONFIGURATION,
         media_stream_constraints={"video": True, "audio": False},
         video_processor_factory=HandDetector,
+        async_processing=True,
     )
-
 
 if funcionalidaEscolhida == "Aplicações":
     subFuncionalidaEscolhida = st.radio(
-        "Selecione uma opção:", ("Sistema para tirar fotos (Via câmera - Autorizar)", "Sistema de contagem (Via câmera - Autorizar)"), horizontal=True)
-    if subFuncionalidaEscolhida == "Sistema para tirar fotos (Via câmera)":
-        imageCap = Image.open("./media/fingers/2.jpg")
+        "Selecione uma opção:", ("Sistema para tirar fotos", "Sistema de contagem"), horizontal=True)
+    if subFuncionalidaEscolhida == "Sistema para tirar fotos":
+        st.info("Autorizar o uso da câmera")
         st.info("Realizar o gesto abaixo para capturar a foto")
+        imageCap = Image.open("./media/fingers/2.jpg")
         st.image(imageCap)
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                os.system("TakePictureController.py")
-                with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
-                    st.download_button(
-                        label="📥 Baixar imagem", data=arquivoFinal, file_name="imagem.png")
-                os.remove(
-                    "./media/pictures/imagem.png")
+        os.system("TakePictureController.py")
+        with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
+            st.download_button(label="📥 Baixar imagem", data=arquivoFinal, file_name="imagem.png")
+        os.remove("./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem (Via câmera)":
         imageCap = Image.open("./media/fingers.jpg")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
