@@ -218,7 +218,7 @@ if funcionalidaEscolhida == "Aplicações":
             with open("./media/imagem.png", "rb") as arquivoFinal:
                 st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
-            st.write(f'Imagem salva (${time()})')
+            st.write(f'Imagem salva (${time.time()})')
         if os.path.exists("./media/imagem.png"):
             os.remove("./media/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
