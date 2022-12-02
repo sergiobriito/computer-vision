@@ -214,11 +214,11 @@ if funcionalidaEscolhida == "Aplicações":
             async_processing=True,
         )
         if os.path.exists("./media/imagem.png"):
-            with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
+            with open("./media/imagem.png", "rb") as arquivoFinal:
                 st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
         if os.path.exists("./media/imagem.png"):
-            os.remove("./media/pictures/imagem.png")
+            os.remove("./media/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
         st.info("Autorizar o uso da câmera")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
