@@ -154,7 +154,7 @@ class TakePictureController:
                     fingers.append(0)
 
             if fingers == [0, 0, 0, 0, 0]:
-                img_name = "media/pictures/imagem.png"
+                img_name = "./media/imagem.png"
                 cv2.imwrite(img_name, img)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
@@ -213,11 +213,11 @@ if funcionalidaEscolhida == "Aplicações":
             video_processor_factory=TakePictureController,
             async_processing=True,
         )
-        if os.path.exists("./media/pictures/imagem.png"):
+        if os.path.exists("./media/imagem.png"):
             with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
                 st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
-        if os.path.exists("./media/pictures/imagem.png"):
+        if os.path.exists("./media/imagem.png"):
             os.remove("./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
         st.info("Autorizar o uso da câmera")
