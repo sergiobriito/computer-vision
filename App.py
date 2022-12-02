@@ -100,21 +100,17 @@ if funcionalidaEscolhida == "Aplicações":
         "Selecione uma opção:", ("Sistema para tirar fotos", "Sistema de contagem"), horizontal=True)
     if subFuncionalidaEscolhida == "Sistema para tirar fotos":
         st.info("Autorizar o uso da câmera")
-        st.info("Realizar o gesto abaixo para capturar a foto")
-        imageCap = Image.open("./media/fingers/2.jpg")
-        st.image(imageCap)
+        st.info("Realizar o gesto ✌️ para capturar a foto")
         os.system("TakePictureController.py")
         with open("./media/pictures/imagem.png", "rb") as arquivoFinal:
             st.download_button(label="📥 Baixar imagem", data=arquivoFinal, file_name="imagem.png")
         os.remove("./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
-        imageCap = Image.open("./media/fingers.jpg")
+        st.info("Autorizar o uso da câmera")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
+        imageCap = Image.open("./media/fingers.jpg")
         st.image(imageCap)
-        botaoExecutar = st.button("Executar")
-        if botaoExecutar:
-            with st.spinner('Processando...'):
-                os.system("FingerCounter.py")
+        os.system("FingerCounter.py")
 
 style = """
 <style>
