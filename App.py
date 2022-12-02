@@ -108,7 +108,7 @@ if funcionalidaEscolhida == "Aplicações":
             st.download_button(label="📥 Baixar imagem", data=arquivoFinal, file_name="imagem.png")
         os.remove("./media/pictures/imagem.png")
     if subFuncionalidaEscolhida == "Sistema de contagem":
-        imageCap = Image.open("./media/fingers.JPG")
+        imageCap = Image.open("./media/fingers.jpg")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
         st.image(imageCap)
         botaoExecutar = st.button("Executar")
