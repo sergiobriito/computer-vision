@@ -153,7 +153,7 @@ class TakePictureController:
                 else:
                     fingers.append(0)
 
-            if fingers == [0, 1, 1, 0, 0]:
+            if fingers == [0, 0, 0, 0, 0]:
                 img_name = "media/pictures/imagem.png"
                 cv2.imwrite(img_name, img)
 
