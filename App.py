@@ -128,7 +128,7 @@ visibility: hidden;
 white-space: nowrap;
 }
 section.css-po3vlj.exg6vvm15 button{visibility:hidden;}
-#Linkedin {margin-top: 190px;}
+#Linkedin {margin-top: 130px;}
 #desenvolvidoPor {color: black;}
 #nome {color: black;}
 </style>
