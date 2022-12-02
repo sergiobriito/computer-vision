@@ -4,7 +4,7 @@ import mediapipe as mp
 import cv2
 import streamlit.components.v1 as components
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
-import time
+from datetime import datetime
 import av
 import subprocess
 import os
@@ -155,7 +155,7 @@ class TakePictureController:
                     fingers.append(0)
 
             if fingers == [0, 0, 0, 0, 0]:
-                img_name = "./media/imagem.png"
+                img_name = "./media/imagemCAM.png"
                 cv2.imwrite(img_name, img)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
@@ -214,13 +214,17 @@ if funcionalidaEscolhida == "Aplicações":
             video_processor_factory=TakePictureController,
             async_processing=True,
         )
-        with open("./media/imagem.png", "rb") as arquivoFinal:
-            st.download_button(label="📥 Baixar imagem",
-                               data=arquivoFinal, file_name="imagem.png")
-        st.write(f'Imagem salva (${time.time()})')
 
-        if os.path.exists("./media/imagem.png"):
+        if os.path.exists("./media/imagemCAM.png"):
+            with open("./media/imagemCAM.png", "rb") as arquivoFinal:
+                st.download_button(label="📥 Baixar imagem",
+                                   data=arquivoFinal, file_name="imagem.png")
+            st.write(f'Imagem salva')
+
+        if os.path.exists("./media/imagemCAM.png"):
+            os.remove("./media/imagemCAM.png")
             os.remove("./media/imagem.png")
+
     if subFuncionalidaEscolhida == "Sistema de contagem":
         st.info("Autorizar o uso da câmera")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
