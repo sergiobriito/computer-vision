@@ -221,10 +221,6 @@ if funcionalidaEscolhida == "Aplicações":
                                    data=arquivoFinal, file_name="imagem.png")
             st.write(f'Imagem salva')
 
-        if os.path.exists("./media/imagemCAM.png"):
-            os.remove("./media/imagemCAM.png")
-            os.remove("./media/imagem.png")
-
     if subFuncionalidaEscolhida == "Sistema de contagem":
         st.info("Autorizar o uso da câmera")
         st.info("Realizar os gestos abaixo para visualizar a contagem")
