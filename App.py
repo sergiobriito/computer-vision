@@ -70,7 +70,7 @@ funcionalidaEscolhida = st.radio("Selecione uma opção:", ("Sobre", "Reconhecim
 
 if funcionalidaEscolhida == "Sobre":
     st.info("Projeto de visão computacional em Python, utilizando OpenCV e MediaPipe")
-    imageCap = Image.open("./media/intro.jpg")
+    imageCap = Image.open("./media/Intro.jpg")
     st.image(imageCap)
 
 if funcionalidaEscolhida == "Reconhecimento facial":
