@@ -154,10 +154,10 @@ class TakePictureController:
                 else:
                     fingers.append(0)
 
-            if fingers == [0, 0, 0, 0, 0]:
+            if fingers == [0, 1, 1, 0, 0]:
                 img_name = "./media/imagemCAM.png"
                 cv2.imwrite(img_name, img)
-                cv2.putText(img, "Imagem salva", (450, 70),cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+                cv2.putText(img, "Imagem salva", (250, 70),cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 1)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
