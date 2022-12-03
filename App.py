@@ -220,9 +220,8 @@ if funcionalidaEscolhida == "Aplicações":
             with open("./media/imagemCAM.png", "rb") as arquivoFinal:
                 downloadButton = st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
-        if downloadButton:
-            os.remove("./media/imagemCAM.png")
-            os.remove("./media/imagem.png")
+            if downloadButton:
+                os.remove("./media/imagemCAM.png")
 
         st.write(f'Imagem salva (${now})')
 
