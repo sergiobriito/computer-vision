@@ -157,7 +157,7 @@ class TakePictureController:
             if fingers == [0, 0, 0, 0, 0]:
                 img_name = "./media/imagemCAM.png"
                 cv2.imwrite(img_name, img)
-                break
+                return
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
