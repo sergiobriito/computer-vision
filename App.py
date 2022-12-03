@@ -218,9 +218,13 @@ if funcionalidaEscolhida == "Aplicações":
         if os.path.exists("./media/imagemCAM.png"):
             now = datetime.now()
             with open("./media/imagemCAM.png", "rb") as arquivoFinal:
-                st.download_button(label="📥 Baixar imagem",
+                downloadButton = st.download_button(label="📥 Baixar imagem",
                                    data=arquivoFinal, file_name="imagem.png")
-            st.write(f'Imagem salva (${now})')
+        if downloadButton:
+            os.remove("./media/imagemCAM.png")
+            os.remove("./media/imagem.png")
+
+        st.write(f'Imagem salva (${now})')
 
     if subFuncionalidaEscolhida == "Sistema de contagem":
         st.info("Autorizar o uso da câmera")
