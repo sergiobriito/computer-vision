@@ -104,7 +104,7 @@ class FingerCounter:
 
         # Total fingers
         totalFingers = fingers.count(1)
-        cv2.putText(img, str(int(totalFingers)), (450, 70),
+        cv2.putText(img, str(int(totalFingers)), (250, 70),
                     cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
@@ -157,7 +157,7 @@ class TakePictureController:
             if fingers == [0, 1, 1, 0, 0]:
                 img_name = "./media/imagemCAM.png"
                 cv2.imwrite(img_name, img)
-                cv2.putText(img, "Imagem salva", (250, 70),cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 1)
+                cv2.putText(img, "Imagem salva", (250, 70),cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
