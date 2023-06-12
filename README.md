@@ -11,5 +11,4 @@ Finger Counting: Implements a finger counting system by tracking hand landmarks 
 
 Take Picture: Allows the user to capture an image from the video stream by performing a specific hand gesture.
 
-Link: https://computer-vision-project.streamlit.app/
 
